@@ -20,13 +20,14 @@ namespace Starwars.Tests.Character
 
             var characterModel = new CharacterModel
             {
-
+                Name = "Luke Skywalker",
+                Planet = "Alderaan"
             };
 
             var dto = testSubject.ToCharacterResponseDto(characterModel);
 
-            //Assert.AreEqual(characterModel.Id, dto);
-
+            Assert.AreEqual(characterModel.Name, dto.Name);
+            Assert.AreEqual(characterModel.Planet, dto.Planet);
         }
 
         [TestMethod]
@@ -36,10 +37,14 @@ namespace Starwars.Tests.Character
 
             var characterDto = new CharacterDto
             {
-
+                Name = "Luke Skywalker",
+                Planet = "Alderaan"
             };
 
             var model = testSubject.ToCharacterModel(characterDto);
+
+            Assert.AreEqual(characterDto.Name, model.Name);
+            Assert.AreEqual(characterDto.Planet, model.Planet);
         }
     }
 }

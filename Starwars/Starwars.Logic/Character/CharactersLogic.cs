@@ -1,34 +1,81 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Starwars.Abstraction.Enums;
 using Starwars.Abstraction.Interfaces.Logic;
+using Starwars.Data;
 using Starwars.Data.Models.Character;
+using System;
+using System.Threading.Tasks;
 
 namespace Starwars.Logic.Character
 {
     public class CharacterLogic : ICharacterLogic
     {
-        public Task<CharacterModel> GetAllCharacters()
+        private readonly IStarwarsContext _starwarsContext;
+        public CharacterLogic(IStarwarsContext starwarsContext)
         {
-            throw new System.NotImplementedException();
+            _starwarsContext = starwarsContext;
+        }
+        public async Task<CharacterModel[]> GetAllCharacters()
+        {
+            return await _starwarsContext.Characters.ToArrayAsync();
         }
 
-        public Task<CharacterModel> GetById(long characterId)
+        public async Task<CharacterModel> GetById(long characterId)
         {
-            throw new System.NotImplementedException();
+            var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
+
+            return character;
         }
 
-        public Task<CharacterModel> SoftDeleteCharacter(long characterId)
+        public async Task<CharacterModel> SoftDeleteCharacter(long characterId)
         {
-            throw new System.NotImplementedException();
+            var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
+
+            if (character != null)
+            {
+                character.Status = (int)CharacterStatusEnum.DELETED;
+                character.ModifyDate = DateTime.Now;
+
+
+                _starwarsContext.Characters.Update(character);
+                _starwarsContext.SaveChanges();
+            }
+
+            return null;
+
+            //TODO here need to use transaction
         }
 
-        public Task<CharacterModel> UpdateCharacter(CharacterModel character)
+        public async Task<CharacterModel> UpdateCharacter(long characterId, CharacterModel character)
         {
-            throw new System.NotImplementedException();
+            var existingCharacter = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
+
+            if (existingCharacter == null)
+                return null;
+
+            character.Id = characterId;
+
+            _starwarsContext.Characters.Update(character);
+
+            _starwarsContext.SaveChanges();
+
+            return character;
+
+            //TODO here need to use transaction
         }
 
         public CharacterModel AddCharacter(CharacterModel character)
         {
-            throw new System.NotImplementedException();
+            character.SaveDate = DateTime.Now;
+            character.Status = (int)CharacterStatusEnum.ACTIVE;
+
+            _starwarsContext.Characters.Add(character);
+
+            _starwarsContext.SaveChanges();
+
+            return character;
+
+            //TODO here need to use transaction
         }
     }
 }

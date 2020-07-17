@@ -2,7 +2,7 @@
 {
     public enum CharacterStatusEnum
     {
-        ACTIVE = 0,
-        DELETED = 1
+        DELETED = 0,
+        ACTIVE = 1
     }
 }

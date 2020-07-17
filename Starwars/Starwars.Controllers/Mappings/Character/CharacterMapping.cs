@@ -8,12 +8,20 @@ namespace Starwars.Controllers.Mappings.Character
     {
         public CharacterResponseDto ToCharacterResponseDto(CharacterModel characterModel)
         {
-            throw new System.NotImplementedException();
+            return new CharacterResponseDto
+            {
+                Name = characterModel.Name,
+                Planet = characterModel.Planet
+            };
         }
 
         public CharacterModel ToCharacterModel(CharacterDto characterDto)
         {
-            throw new System.NotImplementedException();
+            return new CharacterModel
+            {
+                Name = characterDto.Name,
+                Planet = characterDto.Planet
+            };
         }
     }
 }

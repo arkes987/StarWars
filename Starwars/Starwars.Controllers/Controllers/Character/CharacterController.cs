@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Starwars.Abstraction.Dto.Character;
 using Starwars.Abstraction.Interfaces.Logic;
+using Starwars.Abstraction.Interfaces.Mappings;
 
 namespace Starwars.Controllers.Controllers.Character
 {
@@ -8,41 +12,70 @@ namespace Starwars.Controllers.Controllers.Character
     public class CharacterController : ControllerBase
     {
         private readonly ICharacterLogic _charactersLogic;
-        public CharacterController(ICharacterLogic charactersLogic)
+        private readonly ICharacterMapping _characterMapping;
+        public CharacterController(ICharacterLogic charactersLogic, ICharacterMapping characterMapping)
         {
             _charactersLogic = charactersLogic;
+            _characterMapping = characterMapping;
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        [HttpGet("{id}")]
-        public void GetCharacter(long id)
+        [HttpGet("{characterId}")]
+        public async Task<ActionResult<CharacterResponseDto>> GetCharacter(long characterId)
         {
-            
+            var character = await _charactersLogic.GetById(characterId);
+
+            if (character == null)
+                return NotFound();
+
+            return Ok(_characterMapping.ToCharacterResponseDto(character));
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [HttpGet]
+        public async Task<ActionResult<CharacterResponseDto[]>> GetAllCharacters()
+        {
+            var characters = await _charactersLogic.GetAllCharacters();
+
+            return Ok(characters?.Select(_characterMapping.ToCharacterResponseDto).ToArray());
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpPost]
-        public void AddCharacter(long id)
+        public ActionResult<CharacterResponseDto> AddCharacter(CharacterDto characterDto)
         {
+            var characterAdded = _charactersLogic.AddCharacter(_characterMapping.ToCharacterModel(characterDto));
 
+            return Ok(_characterMapping.ToCharacterResponseDto(characterAdded));
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        [HttpPut("{id}")]
-        public void UpdateCharacter(long id)
+        [HttpPut("{characterId}")]
+        public async Task<ActionResult<CharacterResponseDto>> UpdateCharacter(CharacterDto characterDto, long characterId)
         {
+            var updatedCharacter = await _charactersLogic.UpdateCharacter(characterId, _characterMapping.ToCharacterModel(characterDto));
 
+            if (updatedCharacter == null)
+                return NotFound();
+
+            return Ok(_characterMapping.ToCharacterResponseDto(updatedCharacter));
         }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        [HttpDelete("{id}")]
-        public void DeleteCharacter(long id)
+        [HttpDelete("{characterId}")]
+        public async Task<ActionResult<CharacterResponseDto>> DeleteCharacter(long characterId)
         {
+            var deletedCharacter = await _charactersLogic.SoftDeleteCharacter(characterId);
 
+            if (deletedCharacter == null)
+                return NotFound();
+
+            return Ok(_characterMapping.ToCharacterResponseDto(deletedCharacter));
         }
     }
 }
