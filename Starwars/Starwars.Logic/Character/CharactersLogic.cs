@@ -5,6 +5,7 @@ using Starwars.Data.Extensions.Character;
 using Starwars.Data;
 using Starwars.Data.Models.Character;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Starwars.Logic.Character
@@ -18,12 +19,16 @@ namespace Starwars.Logic.Character
         }
         public async Task<CharacterModel[]> GetAllCharacters()
         {
-            return await _starwarsContext.Characters.ToArrayAsync();
+            IQueryable<CharacterModel> activeCharacters =
+                _starwarsContext.Characters.Where(character => character.Status != (int)CharacterStatusEnum.DELETED);
+
+            return await activeCharacters.ToArrayAsync();
         }
 
         public async Task<CharacterModel> GetById(long characterId)
         {
-            var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
+            var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x =>
+                x.Id == characterId && x.Status != (int)CharacterStatusEnum.DELETED);
 
             return character;
         }
@@ -36,10 +41,9 @@ namespace Starwars.Logic.Character
             {
                 character.Status = (int)CharacterStatusEnum.DELETED;
                 character.ModifyDate = DateTime.Now;
-
-
-                _starwarsContext.Characters.Update(character);
                 _starwarsContext.SaveChanges();
+
+                return character;
             }
 
             return null;
