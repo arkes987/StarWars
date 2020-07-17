@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Starwars.Data\Starwars.Data.csproj" />
+  </ItemGroup>
+
 </Project>

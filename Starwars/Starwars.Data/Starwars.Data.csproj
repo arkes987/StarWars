@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Characters\" />
-    <Folder Include="Models\Episodes\" />
-    <Folder Include="Models\Friends\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">

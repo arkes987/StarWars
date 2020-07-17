@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Starwars.Abstraction.Interfaces.Logic;
+using Starwars.Abstraction.Interfaces.Mappings;
+using Starwars.Controllers.Mappings.Character;
 using Starwars.Data;
+using Starwars.Logic.Character;
 
 namespace Starwars
 {
@@ -27,11 +31,18 @@ namespace Starwars
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Starwars", Version = "v1" });
             }); 
             services.AddHealthChecks();
+            ConfigureOwnServices(services);
 
             services.AddEntityFrameworkSqlServer().AddDbContext<StarwarsContext>(options => options.UseSqlServer(Configuration["AppSettings:ConnectionString"]));
 
             services.AddScoped<IStarwarsContext, StarwarsContext>();
 
+        }
+
+        private void ConfigureOwnServices(IServiceCollection services)
+        {
+            services.AddScoped<ICharacterLogic, CharacterLogic>();
+            services.AddSingleton<ICharacterMapping, CharacterMapping>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

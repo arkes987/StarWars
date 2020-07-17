@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Starwars.Abstraction.Interfaces.Logic
+namespace Starwars.Abstraction.Dto.Character
 {
-    public interface ICharactersLogic
+    public class CharacterResponseDto
     {
 
     }

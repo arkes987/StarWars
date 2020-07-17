@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Starwars.Abstraction.Interfaces.Logic;
 
-namespace Starwars.Controllers.Controllers.Characters
+namespace Starwars.Controllers.Controllers.Character
 {
     [ApiController]
     [Route("[controller]")]
-    public class CharactersController : ControllerBase
+    public class CharacterController : ControllerBase
     {
-        private readonly ICharactersLogic _charactersLogic;
-        public CharactersController(ICharactersLogic charactersLogic)
+        private readonly ICharacterLogic _charactersLogic;
+        public CharacterController(ICharacterLogic charactersLogic)
         {
             _charactersLogic = charactersLogic;
         }
