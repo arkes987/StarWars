@@ -7,5 +7,6 @@ namespace Starwars.Abstraction.Interfaces.Mappings
     {
         CharacterResponseDto ToCharacterResponseDto(CharacterModel characterModel);
         CharacterModel ToCharacterModel(CharacterDto characterDto);
+        void PopulateIdOnModel(long characterId, CharacterModel characterModel);
     }
 }

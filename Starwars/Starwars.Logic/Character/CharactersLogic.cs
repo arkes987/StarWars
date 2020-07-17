@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Starwars.Abstraction.Enums;
 using Starwars.Abstraction.Interfaces.Logic;
+using Starwars.Data.Extensions.Character;
 using Starwars.Data;
 using Starwars.Data.Models.Character;
 using System;
@@ -46,17 +47,17 @@ namespace Starwars.Logic.Character
             //TODO here need to use transaction
         }
 
-        public async Task<CharacterModel> UpdateCharacter(long characterId, CharacterModel character)
+        public async Task<CharacterModel> UpdateCharacter(CharacterModel character)
         {
-            var existingCharacter = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
+            var existingCharacter = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == character.Id);
 
             if (existingCharacter == null)
                 return null;
 
-            character.Id = characterId;
+            //here need to populate changes to existing object and only savechanges because of EF tracking
 
-            _starwarsContext.Characters.Update(character);
-
+            existingCharacter.PopulateOnModel(character);
+            existingCharacter.ModifyDate = DateTime.Now;
             _starwarsContext.SaveChanges();
 
             return character;

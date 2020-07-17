@@ -57,7 +57,11 @@ namespace Starwars.Controllers.Controllers.Character
         [HttpPut("{characterId}")]
         public async Task<ActionResult<CharacterResponseDto>> UpdateCharacter(CharacterDto characterDto, long characterId)
         {
-            var updatedCharacter = await _charactersLogic.UpdateCharacter(characterId, _characterMapping.ToCharacterModel(characterDto));
+            var characterModel = _characterMapping.ToCharacterModel(characterDto);
+
+            _characterMapping.PopulateIdOnModel(characterId, characterModel);
+
+            var updatedCharacter = await _charactersLogic.UpdateCharacter(characterModel);
 
             if (updatedCharacter == null)
                 return NotFound();

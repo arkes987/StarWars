@@ -23,5 +23,10 @@ namespace Starwars.Controllers.Mappings.Character
                 Planet = characterDto.Planet
             };
         }
+
+        public void PopulateIdOnModel(long characterId, CharacterModel characterModel)
+        {
+            characterModel.Id = characterId;
+        }
     }
 }
