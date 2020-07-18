@@ -1,6 +1,7 @@
 ﻿using Starwars.Abstraction.Dto.Character;
 using Starwars.Abstraction.Interfaces.Mappings;
 using Starwars.Data.Models.Character;
+using System.Linq;
 
 namespace Starwars.Controllers.Mappings.Character
 {
@@ -11,7 +12,8 @@ namespace Starwars.Controllers.Mappings.Character
             return new CharacterResponseDto
             {
                 Name = characterModel.Name,
-                Planet = characterModel.Planet
+                Planet = characterModel.Planet,
+                Episodes = characterModel.Episodes?.Select(episode => episode.Episode?.Name).ToArray()
             };
         }
 

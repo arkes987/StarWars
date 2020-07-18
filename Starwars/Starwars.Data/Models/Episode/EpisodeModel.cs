@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Starwars.Data.Models.AssignedEpisode;
 
 namespace Starwars.Data.Models.Episode
 {
@@ -21,5 +23,7 @@ namespace Starwars.Data.Models.Episode
         public DateTime SaveDate { get; set; }
 
         public DateTime? ModifyDate { get; set; }
+
+        public ICollection<AssignedEpisodeModel> Characters { get; set; }
     }
 }

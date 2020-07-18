@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Starwars.Abstraction.Enums;
 using Starwars.Abstraction.Interfaces.Logic;
-using Starwars.Data.Extensions.Character;
 using Starwars.Data;
+using Starwars.Data.Extensions.Character;
 using Starwars.Data.Models.Character;
 using System;
 using System.Linq;
@@ -19,8 +19,9 @@ namespace Starwars.Logic.Character
         }
         public async Task<CharacterModel[]> GetAllCharacters()
         {
-            IQueryable<CharacterModel> activeCharacters =
-                _starwarsContext.Characters.Where(character => character.Status != (int)CharacterStatusEnum.DELETED);
+            IQueryable<CharacterModel> activeCharacters = _starwarsContext.Characters
+                .Include(x => x.Episodes).ThenInclude(y => y.Episode).Where(character =>
+                    character.Status != (int) CharacterStatusEnum.DELETED);
 
             return await activeCharacters.ToArrayAsync();
         }

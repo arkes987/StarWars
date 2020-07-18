@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Starwars.Data;
 
 namespace Starwars.Data.Migrations
 {
     [DbContext(typeof(StarwarsContext))]
-    partial class StarwarsContextModelSnapshot : ModelSnapshot
+    [Migration("20200718070358_Changed relationship, added navigation properties")]
+    partial class Changedrelationshipaddednavigationproperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

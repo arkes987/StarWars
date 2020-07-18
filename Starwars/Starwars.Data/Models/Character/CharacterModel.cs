@@ -1,9 +1,9 @@
 ﻿using System;
-using Starwars.Data.Models.Episode;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Starwars.Data.Attributes;
+using Starwars.Data.Models.AssignedEpisode;
 
 namespace Starwars.Data.Models.Character
 {
@@ -20,8 +20,6 @@ namespace Starwars.Data.Models.Character
 
         public string Planet { get; set; }
 
-        public ICollection<EpisodeModel> Episodes { get; set; }
-
         [Required]
         [NotPopulate]
         public int Status { get; set; }
@@ -32,5 +30,7 @@ namespace Starwars.Data.Models.Character
 
         [NotPopulate]
         public DateTime? ModifyDate { get; set; }
+
+        public ICollection<AssignedEpisodeModel> Episodes { get; set; }
     }
 }

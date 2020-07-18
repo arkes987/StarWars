@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Starwars.Data;
 
 namespace Starwars.Data.Migrations
 {
     [DbContext(typeof(StarwarsContext))]
-    partial class StarwarsContextModelSnapshot : ModelSnapshot
+    [Migration("20200718063657_Changed assignedtable name")]
+    partial class Changedassignedtablename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,8 +30,6 @@ namespace Starwars.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("CharacterId", "EpisodeId");
-
-                    b.HasIndex("EpisodeId");
 
                     b.ToTable("assignedepisodes");
                 });
@@ -87,21 +87,6 @@ namespace Starwars.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("episodes");
-                });
-
-            modelBuilder.Entity("Starwars.Data.Models.AssignedEpisode.AssignedEpisodeModel", b =>
-                {
-                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Character")
-                        .WithMany("Episodes")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Starwars.Data.Models.Episode.EpisodeModel", "Episode")
-                        .WithMany("Characters")
-                        .HasForeignKey("EpisodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
