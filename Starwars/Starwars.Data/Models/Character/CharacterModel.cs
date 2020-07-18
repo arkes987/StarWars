@@ -32,7 +32,7 @@ namespace Starwars.Data.Models.Character
         public DateTime? ModifyDate { get; set; }
 
         public ICollection<AssignedEpisodeModel> Episodes { get; set; }
-        public ICollection<AssignedFriend.AssignedFriend> FriendTo { get; set; }
-        public ICollection<AssignedFriend.AssignedFriend> Friends { get; set; }
+        public ICollection<AssignedFriend.AssignedFriendModel> FriendTo { get; set; }
+        public ICollection<AssignedFriend.AssignedFriendModel> Friends { get; set; }
     }
 }

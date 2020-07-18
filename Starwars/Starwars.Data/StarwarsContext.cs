@@ -35,17 +35,17 @@ namespace Starwars.Data
             });
 
             //composite key
-            modelBuilder.Entity<AssignedFriend>().HasKey(key => new
+            modelBuilder.Entity<AssignedFriendModel>().HasKey(key => new
             {
                 key.CharacterId,
                 key.FriendId
             });
 
-            modelBuilder.Entity<AssignedFriend>().HasOne(x => x.Character).WithMany(x => x.FriendTo)
+            modelBuilder.Entity<AssignedFriendModel>().HasOne(x => x.Character).WithMany(x => x.FriendTo)
                 .HasForeignKey(x => x.FriendId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<AssignedFriend>().HasOne(x => x.Friend).WithMany(x => x.Friends)
+            modelBuilder.Entity<AssignedFriendModel>().HasOne(x => x.Friend).WithMany(x => x.Friends)
                 .HasForeignKey(x => x.CharacterId)
                 .OnDelete(DeleteBehavior.Restrict);
 
