@@ -34,6 +34,21 @@ namespace Starwars.Data.Migrations
                     b.ToTable("assignedepisodes");
                 });
 
+            modelBuilder.Entity("Starwars.Data.Models.AssignedFriend.AssignedFriend", b =>
+                {
+                    b.Property<long>("CharacterId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FriendId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CharacterId", "FriendId");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("assignedfriends");
+                });
+
             modelBuilder.Entity("Starwars.Data.Models.Character.CharacterModel", b =>
                 {
                     b.Property<long>("Id")
@@ -101,6 +116,21 @@ namespace Starwars.Data.Migrations
                         .WithMany("Characters")
                         .HasForeignKey("EpisodeId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Starwars.Data.Models.AssignedFriend.AssignedFriend", b =>
+                {
+                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Friend")
+                        .WithMany("Friends")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Character")
+                        .WithMany("FriendTo")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

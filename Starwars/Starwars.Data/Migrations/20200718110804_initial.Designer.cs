@@ -10,8 +10,8 @@ using Starwars.Data;
 namespace Starwars.Data.Migrations
 {
     [DbContext(typeof(StarwarsContext))]
-    [Migration("20200718063657_Changed assignedtable name")]
-    partial class Changedassignedtablename
+    [Migration("20200718110804_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,24 @@ namespace Starwars.Data.Migrations
 
                     b.HasKey("CharacterId", "EpisodeId");
 
+                    b.HasIndex("EpisodeId");
+
                     b.ToTable("assignedepisodes");
+                });
+
+            modelBuilder.Entity("Starwars.Data.Models.AssignedFriend.AssignedFriend", b =>
+                {
+                    b.Property<long>("CharacterId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FriendId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CharacterId", "FriendId");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("assignedfriends");
                 });
 
             modelBuilder.Entity("Starwars.Data.Models.Character.CharacterModel", b =>
@@ -87,6 +104,36 @@ namespace Starwars.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("episodes");
+                });
+
+            modelBuilder.Entity("Starwars.Data.Models.AssignedEpisode.AssignedEpisodeModel", b =>
+                {
+                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Character")
+                        .WithMany("Episodes")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Starwars.Data.Models.Episode.EpisodeModel", "Episode")
+                        .WithMany("Characters")
+                        .HasForeignKey("EpisodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Starwars.Data.Models.AssignedFriend.AssignedFriend", b =>
+                {
+                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Friend")
+                        .WithMany("Friends")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Starwars.Data.Models.Character.CharacterModel", "Character")
+                        .WithMany("FriendTo")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

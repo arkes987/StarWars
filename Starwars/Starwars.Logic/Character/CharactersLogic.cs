@@ -20,7 +20,7 @@ namespace Starwars.Logic.Character
         public async Task<CharacterModel[]> GetAllCharacters()
         {
             IQueryable<CharacterModel> activeCharacters = _starwarsContext.Characters
-                .Include(x => x.Episodes).ThenInclude(y => y.Episode).Where(character =>
+                .Include(x => x.Episodes).ThenInclude(y => y.Episode).Include(x => x.Friends).Where(character =>
                     character.Status != (int) CharacterStatusEnum.DELETED);
 
             return await activeCharacters.ToArrayAsync();

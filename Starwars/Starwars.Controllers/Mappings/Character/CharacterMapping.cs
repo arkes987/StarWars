@@ -13,7 +13,8 @@ namespace Starwars.Controllers.Mappings.Character
             {
                 Name = characterModel.Name,
                 Planet = characterModel.Planet,
-                Episodes = characterModel.Episodes?.Select(episode => episode.Episode?.Name).ToArray()
+                Episodes = characterModel.Episodes?.Select(episode => episode.Episode?.Name).ToArray(),
+                Friends = characterModel.Friends?.Select(friend => friend.Character?.Name).ToArray()
             };
         }
 
