@@ -7,16 +7,19 @@ using Starwars.Data.Models.Character;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Starwars.Data.Extensions.Paging;
 
 namespace Starwars.Logic.Character
 {
     public class CharacterLogic : ICharacterLogic
     {
+        private readonly ILogger<CharacterLogic> _logger;
         private readonly IStarwarsContext _starwarsContext;
-        public CharacterLogic(IStarwarsContext starwarsContext)
+        public CharacterLogic(IStarwarsContext starwarsContext, ILogger<CharacterLogic> logger)
         {
             _starwarsContext = starwarsContext;
+            _logger = logger;
         }
         public async Task<CharacterModel[]> GetAllCharacters()
         {
@@ -43,6 +46,8 @@ namespace Starwars.Logic.Character
         {
             var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
 
+            _logger.LogInformation($"Soft deleting character with id:{characterId}.");
+
             if (character != null)
             {
                 character.Status = (int)CharacterStatusEnum.DELETED;
@@ -67,16 +72,20 @@ namespace Starwars.Logic.Character
             existingCharacter.ModifyDate = DateTime.Now;
             await _starwarsContext.SaveChangesAsync();
 
+            _logger.LogInformation($"Populated changes on charcter with id:{character.Id}");
+
             return character;
         }
         public async Task<CharacterModel> AddCharacter(CharacterModel character)
         {
             character.SaveDate = DateTime.Now;
             character.Status = (int)CharacterStatusEnum.ACTIVE;
-
-            _starwarsContext.Characters.Add(character);
+            
+            await _starwarsContext.Characters.AddAsync(character);
 
             await _starwarsContext.SaveChangesAsync();
+
+            _logger.LogInformation($"Added new character with id:{character.Id}");
 
             return character;
         }

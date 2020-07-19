@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
@@ -17,10 +18,11 @@ namespace Starwars.Tests.Character
     public class CharacterLogicTests
     {
         private readonly Mock<IStarwarsContext> _starwarsContextMock = new Mock<IStarwarsContext>();
+        private readonly Mock<ILogger<CharacterLogic>> _loggerMock = new Mock<ILogger<CharacterLogic>>();
 
         private CharacterLogic GetTestSubject()
         {
-            return new CharacterLogic(_starwarsContextMock.Object);
+            return new CharacterLogic(_starwarsContextMock.Object, _loggerMock.Object);
         }
 
         [TestMethod]
@@ -411,7 +413,7 @@ namespace Starwars.Tests.Character
 
             await characterLogic.AddCharacter(newCharacterModel);
 
-            charactersMock.Verify(mock => mock.Add(newCharacterModel), Times.Once);
+            charactersMock.Verify(mock => mock.AddAsync(newCharacterModel, new System.Threading.CancellationToken()), Times.Once);
         }
 
         [TestMethod]

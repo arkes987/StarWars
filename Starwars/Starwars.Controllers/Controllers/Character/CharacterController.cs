@@ -23,6 +23,10 @@ namespace Starwars.Controllers.Controllers.Character
             _pagingMapping = pagingMapping;
         }
 
+        /// <summary>
+        /// Gets character by given id
+        /// </summary>
+        /// <param name="characterId">Id of character</param>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpGet("{characterId}")]
@@ -36,6 +40,10 @@ namespace Starwars.Controllers.Controllers.Character
             return Ok(_characterMapping.ToCharacterResponseDto(character));
         }
 
+        /// <summary>
+        /// Gets all active characters
+        /// </summary>
+        /// <returns>Array of characters</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpGet]
@@ -46,6 +54,12 @@ namespace Starwars.Controllers.Controllers.Character
             return Ok(characters?.Select(_characterMapping.ToCharacterResponseDto).ToArray());
         }
 
+        /// <summary>
+        /// Gets paged active characters
+        /// </summary>
+        /// <param name="page">Number of page to get</param>
+        /// <param name="pageSize">Size of page(count of elements in page)</param>
+        /// <returns>Array of characters and additional paging info</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpGet("page/{page}/pageSize/{pageSize}")]
@@ -58,6 +72,11 @@ namespace Starwars.Controllers.Controllers.Character
             return Ok(responseDto);
         }
 
+        /// <summary>
+        /// Adds new character
+        /// </summary>
+        /// <param name="characterDto"></param>
+        /// <returns>Newly added character</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpPost]
@@ -68,6 +87,12 @@ namespace Starwars.Controllers.Controllers.Character
             return Ok(_characterMapping.ToCharacterResponseDto(characterAdded));
         }
 
+        /// <summary>
+        /// Updates character by id with given data in body
+        /// </summary>
+        /// <param name="characterDto">Character data to update</param>
+        /// <param name="characterId">Id of character</param>
+        /// <returns>Updated character</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpPut("{characterId}")]
@@ -85,6 +110,11 @@ namespace Starwars.Controllers.Controllers.Character
             return Ok(_characterMapping.ToCharacterResponseDto(updatedCharacter));
         }
 
+        /// <summary>
+        /// Soft deletes character(changes status to deleted)
+        /// </summary>
+        /// <param name="characterId">Id of character</param>
+        /// <returns>Deleted character</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpDelete("{characterId}")]
