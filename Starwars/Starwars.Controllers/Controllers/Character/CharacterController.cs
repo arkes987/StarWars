@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Starwars.Abstraction.Dto.Character;
+using Starwars.Abstraction.Dto.Paging;
 using Starwars.Abstraction.Interfaces.Logic;
 using Starwars.Abstraction.Interfaces.Mappings;
+using Starwars.Data.Models.Character;
 
 namespace Starwars.Controllers.Controllers.Character
 {
@@ -13,10 +15,12 @@ namespace Starwars.Controllers.Controllers.Character
     {
         private readonly ICharacterLogic _charactersLogic;
         private readonly ICharacterMapping _characterMapping;
-        public CharacterController(ICharacterLogic charactersLogic, ICharacterMapping characterMapping)
+        private readonly IPagingMapping<CharacterResponseDto, CharacterModel> _pagingMapping;
+        public CharacterController(ICharacterLogic charactersLogic, ICharacterMapping characterMapping, IPagingMapping<CharacterResponseDto, CharacterModel> pagingMapping)
         {
             _charactersLogic = charactersLogic;
             _characterMapping = characterMapping;
+            _pagingMapping = pagingMapping;
         }
 
         [ProducesResponseType(200)]
@@ -40,6 +44,18 @@ namespace Starwars.Controllers.Controllers.Character
             var characters = await _charactersLogic.GetAllCharacters();
 
             return Ok(characters?.Select(_characterMapping.ToCharacterResponseDto).ToArray());
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [HttpGet("page/{page}/pageSize/{pageSize}")]
+        public async Task<ActionResult<PageResponseDto<CharacterResponseDto>>> GetCharactersPaged(int page, int pageSize)
+        {
+            var charactersPaged = await _charactersLogic.GetCharactersPaged(page, pageSize);
+
+            var responseDto = _pagingMapping.ToPageResponseDto(charactersPaged, _characterMapping.ToCharacterResponseDto);
+
+            return Ok(responseDto);
         }
 
         [ProducesResponseType(200)]

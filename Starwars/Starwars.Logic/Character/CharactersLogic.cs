@@ -7,6 +7,7 @@ using Starwars.Data.Models.Character;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Starwars.Data.Extensions.Paging;
 
 namespace Starwars.Logic.Character
 {
@@ -25,7 +26,12 @@ namespace Starwars.Logic.Character
 
             return await activeCharacters.ToArrayAsync();
         }
-
+        public async Task<PagedResult<CharacterModel>> GetCharactersPaged(int page, int pageSize)
+        {
+            return await _starwarsContext.Characters.Include(x => x.Episodes).ThenInclude(y => y.Episode)
+                .Include(x => x.Friends).Where(character => character.Status != (int) CharacterStatusEnum.DELETED)
+                .GetPagedAsync(page, pageSize);
+        }
         public async Task<CharacterModel> GetById(long characterId)
         {
             var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x =>
@@ -33,7 +39,6 @@ namespace Starwars.Logic.Character
 
             return character;
         }
-
         public async Task<CharacterModel> SoftDeleteCharacter(long characterId)
         {
             var character = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == characterId);
@@ -49,7 +54,6 @@ namespace Starwars.Logic.Character
 
             return null;
         }
-
         public async Task<CharacterModel> UpdateCharacter(CharacterModel character)
         {
             var existingCharacter = await _starwarsContext.Characters.FirstOrDefaultAsync(x => x.Id == character.Id);
@@ -65,7 +69,6 @@ namespace Starwars.Logic.Character
 
             return character;
         }
-
         public async Task<CharacterModel> AddCharacter(CharacterModel character)
         {
             character.SaveDate = DateTime.Now;

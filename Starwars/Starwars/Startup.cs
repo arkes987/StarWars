@@ -5,10 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Starwars.Abstraction.Dto.Character;
 using Starwars.Abstraction.Interfaces.Logic;
 using Starwars.Abstraction.Interfaces.Mappings;
 using Starwars.Controllers.Mappings.Character;
+using Starwars.Controllers.Mappings.Paging;
 using Starwars.Data;
+using Starwars.Data.Models.Character;
 using Starwars.Logic.Character;
 
 namespace Starwars
@@ -43,6 +46,10 @@ namespace Starwars
         {
             services.AddScoped<ICharacterLogic, CharacterLogic>();
             services.AddSingleton<ICharacterMapping, CharacterMapping>();
+
+            services
+                .AddSingleton<IPagingMapping<CharacterResponseDto, CharacterModel>,
+                    PagingMapping<CharacterResponseDto, CharacterModel>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
