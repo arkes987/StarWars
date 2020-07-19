@@ -42,14 +42,12 @@ namespace Starwars.Logic.Character
             {
                 character.Status = (int)CharacterStatusEnum.DELETED;
                 character.ModifyDate = DateTime.Now;
-                _starwarsContext.SaveChanges();
+                await _starwarsContext.SaveChangesAsync();
 
                 return character;
             }
 
             return null;
-
-            //TODO here need to use transaction
         }
 
         public async Task<CharacterModel> UpdateCharacter(CharacterModel character)
@@ -63,25 +61,21 @@ namespace Starwars.Logic.Character
 
             existingCharacter.PopulateOnModel(character);
             existingCharacter.ModifyDate = DateTime.Now;
-            _starwarsContext.SaveChanges();
+            await _starwarsContext.SaveChangesAsync();
 
             return character;
-
-            //TODO here need to use transaction
         }
 
-        public CharacterModel AddCharacter(CharacterModel character)
+        public async Task<CharacterModel> AddCharacter(CharacterModel character)
         {
             character.SaveDate = DateTime.Now;
             character.Status = (int)CharacterStatusEnum.ACTIVE;
 
             _starwarsContext.Characters.Add(character);
 
-            _starwarsContext.SaveChanges();
+            await _starwarsContext.SaveChangesAsync();
 
             return character;
-
-            //TODO here need to use transaction
         }
     }
 }

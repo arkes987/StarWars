@@ -9,6 +9,6 @@ namespace Starwars.Abstraction.Interfaces.Logic
         Task<CharacterModel> GetById(long characterId);
         Task<CharacterModel> SoftDeleteCharacter(long characterId);
         Task<CharacterModel> UpdateCharacter(CharacterModel character);
-        CharacterModel AddCharacter(CharacterModel character);
+        Task<CharacterModel> AddCharacter(CharacterModel character);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Starwars.Data.Models.AssignedEpisode;
 using Starwars.Data.Models.AssignedFriend;
 using Starwars.Data.Models.Character;
@@ -11,6 +12,7 @@ namespace Starwars.Data
         DbSet<CharacterModel> Characters { get; set; }
         DbSet<EpisodeModel> Episodes { get; set; }
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 
     public class StarwarsContext : DbContext, IStarwarsContext
@@ -59,6 +61,11 @@ namespace Starwars.Data
         public new void SaveChanges()
         {
             base.SaveChanges();
+        }
+
+        public Task SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
         }
     }
 }

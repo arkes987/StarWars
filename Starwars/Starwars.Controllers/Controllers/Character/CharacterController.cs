@@ -45,9 +45,9 @@ namespace Starwars.Controllers.Controllers.Character
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [HttpPost]
-        public ActionResult<CharacterResponseDto> AddCharacter(CharacterDto characterDto)
+        public async Task<ActionResult<CharacterResponseDto>> AddCharacter(CharacterDto characterDto)
         {
-            var characterAdded = _charactersLogic.AddCharacter(_characterMapping.ToCharacterModel(characterDto));
+            var characterAdded = await _charactersLogic.AddCharacter(_characterMapping.ToCharacterModel(characterDto));
 
             return Ok(_characterMapping.ToCharacterResponseDto(characterAdded));
         }
