@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Starwars.Controllers\Starwars.Controllers.csproj" />
+    <ProjectReference Include="..\Starwars.Logic\Starwars.Logic.csproj" />
   </ItemGroup>
 
 </Project>
