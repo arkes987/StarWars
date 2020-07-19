@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Starwars.Abstraction.Dto.Character;
 using Starwars.Abstraction.Dto.Paging;
 using Starwars.Abstraction.Interfaces.Logic;
 using Starwars.Abstraction.Interfaces.Mappings;
 using Starwars.Data.Models.Character;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Starwars.Controllers.Controllers.Character
 {

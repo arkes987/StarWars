@@ -1,7 +1,6 @@
-﻿using Starwars.Data.Models.Character;
+﻿using Starwars.Data.Extensions.Paging;
+using Starwars.Data.Models.Character;
 using System.Threading.Tasks;
-using Starwars.Abstraction.Models.Paging;
-using Starwars.Data.Extensions.Paging;
 
 namespace Starwars.Abstraction.Interfaces.Logic
 {

@@ -1,6 +1,6 @@
-﻿using System;
-using Starwars.Abstraction.Dto.Paging;
+﻿using Starwars.Abstraction.Dto.Paging;
 using Starwars.Data.Extensions.Paging;
+using System;
 
 namespace Starwars.Abstraction.Interfaces.Mappings
 {

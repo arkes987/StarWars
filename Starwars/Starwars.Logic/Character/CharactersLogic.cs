@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Starwars.Abstraction.Enums;
 using Starwars.Abstraction.Interfaces.Logic;
 using Starwars.Data;
 using Starwars.Data.Extensions.Character;
+using Starwars.Data.Extensions.Paging;
 using Starwars.Data.Models.Character;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Starwars.Data.Extensions.Paging;
 
 namespace Starwars.Logic.Character
 {

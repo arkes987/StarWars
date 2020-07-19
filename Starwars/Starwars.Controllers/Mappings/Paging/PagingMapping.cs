@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Starwars.Abstraction.Dto.Paging;
+﻿using Starwars.Abstraction.Dto.Paging;
 using Starwars.Abstraction.Interfaces.Mappings;
 using Starwars.Data.Extensions.Paging;
+using System;
+using System.Linq;
 
 namespace Starwars.Controllers.Mappings.Paging
 {

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Starwars.Data.Models.Character;
+﻿using Starwars.Data.Models.Character;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Starwars.Data.Models.AssignedFriend
 {

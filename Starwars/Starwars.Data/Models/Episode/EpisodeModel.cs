@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Starwars.Data.Models.AssignedEpisode;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Starwars.Data.Models.AssignedEpisode;
 
 namespace Starwars.Data.Models.Episode
 {

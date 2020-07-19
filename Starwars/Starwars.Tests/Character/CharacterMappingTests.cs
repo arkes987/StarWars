@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Starwars.Abstraction.Dto.Character;
 using Starwars.Controllers.Mappings.Character;
 using Starwars.Data.Models.AssignedEpisode;
 using Starwars.Data.Models.AssignedFriend;
 using Starwars.Data.Models.Character;
 using Starwars.Data.Models.Episode;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Starwars.Tests.Character
 {

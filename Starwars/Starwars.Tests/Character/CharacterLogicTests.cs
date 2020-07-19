@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
@@ -11,6 +8,9 @@ using Starwars.Data.Models.AssignedEpisode;
 using Starwars.Data.Models.AssignedFriend;
 using Starwars.Data.Models.Character;
 using Starwars.Logic.Character;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Starwars.Tests.Character
 {
